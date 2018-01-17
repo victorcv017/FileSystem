@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Example{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Login:singIn page</h1>
+
+<form method="POST" >
+    <input type="email" placeholder="email" name="_username">
+    <br>
+    <input type="password" placeholder="password" name="_password">
+    <br>
+    <label><a >No estas registrado. Registrate</a>
+    <br>
+    <input type="submit" value="Iniciar Sesion">
+   
+</form>
+{% endblock %}

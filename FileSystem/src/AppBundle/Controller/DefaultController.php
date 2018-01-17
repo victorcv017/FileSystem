@@ -1,0 +1,19 @@
+<?php
+
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+class DefaultController extends Controller
+{
+    
+    public function exampleAction(Request $request)
+    {
+        echo "holaaa";
+        return $this->render('@App/example.html.twig', array(
+                    
+        ));
+    }
+}
