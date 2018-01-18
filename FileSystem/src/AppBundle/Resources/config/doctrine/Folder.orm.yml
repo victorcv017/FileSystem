@@ -1,0 +1,29 @@
+AppBundle\Entity\Folder:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\FolderRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        parentId:
+            type: integer
+            nullable: true
+        userId:
+            type: integer
+        description:
+            type: string
+            length: 255
+            nullable: true
+        createdAt:
+            type: datetime
+        path:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

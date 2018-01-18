@@ -1,0 +1,28 @@
+AppBundle\Entity\Files:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\FilesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        folderId:
+            type: integer
+            nullable: true
+        path:
+            type: string
+            length: 255
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+            nullable: true
+        userId:
+            type: integer
+    lifecycleCallbacks: {  }
