@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {   
     public function signInAction(){
-        var_dump($this->getUser());
         if ($this->getUser() instanceof User) {
             
             return $this->redirectToRoute('profile');
