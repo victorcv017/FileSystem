@@ -1,3 +1,17 @@
-example:
-    path: /example
-    defaults: { _controller: AppBundle:Default:example }
+signIn:
+    path: /signIn
+    defaults: { _controller: AppBundle:Default:signIn }
+
+profile:
+    path: /profile
+    defaults: { _controller: AppBundle:Default:profile }
+
+signUp:
+    path: /signUp
+    defaults: { _controller: AppBundle:Default:signUp }
+
+check:
+    path: /check
+logout:
+    path: /logout
+    

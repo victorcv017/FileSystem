@@ -121,11 +121,12 @@ class User implements UserInterface
     }
 
     public function getSalt() {
-        return $this->getName();
+        return $this->getNombre();
     }
 
     public function getUsername(): string {
-        return $this->getEmail();
+        return $this->getCorreo();
     }
 
 }
+

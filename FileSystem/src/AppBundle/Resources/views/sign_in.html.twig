@@ -5,12 +5,12 @@
 {% block body %}
 <h1>PRUEBAAAA 2</h1>
 
-<form method="POST" >
-    <input type="email" placeholder="email" name="_username">
+<form method="POST" action="{{path('check')}}">
+    <input type="email" placeholder="email" name="_username" value="{{last_username}}">
     <br>
     <input type="password" placeholder="password" name="_password">
     <br>
-    <label><a >No estas registrado. Registrate</a>
+    <label><a href="{{path('signUp')}}">No estas registrado. Registrate</a>
     <br>
     <input type="submit" value="Iniciar Sesion">
    

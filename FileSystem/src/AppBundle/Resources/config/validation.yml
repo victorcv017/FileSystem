@@ -1,0 +1,17 @@
+AppBundle\Entity\User:
+    properties:
+        name:
+            - NotBlank: ~
+            - Regex: 
+                pattern: '/^[[:alpha:]]+$/u'
+                message: Your name is not valid
+        email:
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+                checkMX: true
+            
+        password:
+            - NotBlank: ~
+        
+       
+        
