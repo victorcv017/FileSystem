@@ -83,18 +83,14 @@ class DefaultController extends Controller
             
             $file->setExtension($ext);
             $file->setUser($user);
-            $file_name = $file->getName().".".time().".".$file->getExtension();
+            $file_name = $file->getName().".".$file->getExtension();
             
             $data->move("files/".$user->getEmail(),$file_name);
-           
-            
-            
-                  
+     
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
             $em->flush();
-                         
-            
+   
         }
 
         return $this->render('@App/upload_file.html.twig', array(
