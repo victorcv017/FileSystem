@@ -258,33 +258,4 @@ class Files
     {
         return $this->folder;
     }
-    /**
-     * @var string
-     */
-    private $extension;
-
-
-    /**
-     * Set extension
-     *
-     * @param string $extension
-     *
-     * @return Files
-     */
-    public function setExtension($extension)
-    {
-        $this->extension = $extension;
-
-        return $this;
-    }
-
-    /**
-     * Get extension
-     *
-     * @return string
-     */
-    public function getExtension()
-    {
-        return $this->extension;
-    }
 }

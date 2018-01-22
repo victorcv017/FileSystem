@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Upload{% endblock %}
+
+
+{% block body %}
+<h1>Welcome</h1>
+{{ form_start(form, {'action':'' , 'method':'POST' , 'enctype' : 'multipart/form-data'}) }}
+
+{{ form_end(form) }}
+
+{% endblock %}

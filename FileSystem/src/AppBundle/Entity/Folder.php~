@@ -221,7 +221,6 @@ class Folder
      */
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
         $this->childs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->files = new \Doctrine\Common\Collections\ArrayCollection();
     }

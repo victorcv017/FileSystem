@@ -9,6 +9,10 @@ profile:
 signUp:
     path: /signUp
     defaults: { _controller: AppBundle:Default:signUp }
+    
+uploadFile:
+    path: /uploadFile
+    defaults: { _controller: AppBundle:Default:uploadFile }
 
 check:
     path: /check

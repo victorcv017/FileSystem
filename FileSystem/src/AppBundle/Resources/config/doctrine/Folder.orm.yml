@@ -26,4 +26,26 @@ AppBundle\Entity\Folder:
         path:
             type: string
             length: 255
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: folders
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+        
+        parentFolder:
+            targetEntity: Folder
+            inversedBy: childs
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+  
+    oneToMany:
+        childs:
+            targetEntity: Folder
+            mappedBy: parentFolder
+        files:
+            targetEntity: Files
+            mappedBy: folder
     lifecycleCallbacks: {  }

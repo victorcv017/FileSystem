@@ -12,12 +12,16 @@ AppBundle\Entity\Files:
         name:
             type: string
             length: 255
+        extension:
+            type: string
+            length: 255
         folderId:
             type: integer
             nullable: true
         path:
             type: string
             length: 255
+            nullable: true
         createdAt:
             type: datetime
         updatedAt:
@@ -25,4 +29,20 @@ AppBundle\Entity\Files:
             nullable: true
         userId:
             type: integer
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: files
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+        
+        folder:
+            targetEntity: Folder
+            inversedBy: files
+            joinColumn:
+                name: folder_id
+                referencedColumnName: id
+                
+        
     lifecycleCallbacks: {  }
