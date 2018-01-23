@@ -24,8 +24,23 @@
     
     <main role="main" class="container">
         <h1 class="mt-5">MIS ARCHIVOS</h1>
-
+       
     </main> 
 
-    
+    {% if folders is not empty %}
+        {% for folder in folders%}
+            {{folder.name}}
+            {{folder.created.date}}
+        {% endfor %}
+        
+    {% endif %}                
+    {% if files is not empty %}
+        {% for file in files%}
+            {{file.name}}
+            {{file.created.date}}
+            {{file.updated}}
+        {% endfor %}
+        
+    {% endif %}
+     
 {% endblock %}

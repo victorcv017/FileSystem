@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {   
+    
+    //mime Types admitidos en un mapa
     private $mimeType = array(
         'text/plain'=>'txt',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
@@ -26,16 +28,14 @@ class DefaultController extends Controller
         
     );
     
-    private function getCurrentFolder($url){
-        
-        $url = trim($url, '/');
-    }
-    
+    //------------------------------------------Controlador de signIn
     public function signInAction(){
+        //comprueba si hay una sesión de usuario iniciada
         if ($this->getUser() instanceof User) {
-            
             return $this->redirectToRoute('home', array('email'=>$this->getUser()->getEmail()));
         }
+        
+        //recordar el último usuario ingresado, que no lo vuelva a escribir
         $aux = $this->get('security.authentication_utils');
         $last_username = $aux->getLastUsername();
 
@@ -44,6 +44,7 @@ class DefaultController extends Controller
         ));
     }
     
+    //-----------------------------------------Controlador del Perfil
     public function profileAction(Request $request){
         $user = $this->getUser();
         
@@ -52,39 +53,43 @@ class DefaultController extends Controller
         ));
     }
     
+    //----------------------------------------Controlador del Registro
     public function signUpAction(Request $request) {
+        //instancia de la Entidad User y su formulario
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
+        //Cacha los datos ingresados
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            
+            //encripta la contraseña
             $encoder = $this->get('security.password_encoder');
             $data->setPassword($encoder->encodePassword($data, $data->getPassword()));
-            //var_dump($data->getCorreo());
             $data->setRole();
             
+            // crea un nuevo folder para el nuevo usuario
             $folder = new Folder();
             $folder->setUser($data);
             $folder->setName($data->getEmail());
             $folder->setDescription("root folder");
             $folder->setPath($data->getEmail()."/");
-            
+           
+            //guardar los cambios en la base
             $em = $this->getDoctrine()->getManager();
             $em->persist($data);
             $em->persist($folder);
             $em->flush();
-            
-            
-            
             return $this->redirectToRoute('signIn');
         }
+        
         return $this->render('@App/sign_up.html.twig', array(
                     'form' => $form->createView()
-                        // ...
         ));
     }
     
+    //----------------------------------Upload Controller
     public function uploadFileAction(Request $request){
         $user = $this->getUser();
         $upfile = new Files();
@@ -162,12 +167,14 @@ class DefaultController extends Controller
         //var_dump($path);
         $current_folder = $path[sizeof($path)-1];
         
+        if($current_folder == 'home') $current_folder = $user->getEmail();
         
         
         $em = $this->getDoctrine()->getManager();
         $current_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('name' => $current_folder, 'userId' => $user->getId()));
-        //var_dump($current_folder->getName());
-        //var_dump($current_folder);
+        
+        if($current_folder == 'home') $current_folder = $user->getEmail();
+        
         $folders_obj = $current_folder->getChilds();
         $files_obj = $current_folder->getFiles();
         $files = array();
@@ -181,7 +188,7 @@ class DefaultController extends Controller
             $folders[$folder->getId()] = array('name' => $folder->getName(), 
                                         'created' => $folder->getCreatedAt());
         }
-        var_dump($files);
+        //var_dump($files);
         //var_dump($folders);
         
 
@@ -191,7 +198,5 @@ class DefaultController extends Controller
                 
         ));
     }
-    
-    
     
 }
