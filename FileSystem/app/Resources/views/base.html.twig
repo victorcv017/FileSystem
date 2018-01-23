@@ -4,12 +4,14 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}"/>
+        <link href="{{asset('vendor/bootstrap/css/RegistrationPage.min.css')}}" rel="stylesheet">
+        <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">  
         <script src="{{asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script> 
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}{% endblock %} 
     </body>
 </html>

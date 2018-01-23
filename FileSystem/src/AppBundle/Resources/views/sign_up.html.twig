@@ -1,41 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "base.html.twig" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block body %}
     
-    <link rel="icon" href="{{asset('Recursos/Icons/A.ico')}}">
-    <title>REGISTRARSE</title>   
+
+    {{ form_start(form, {'action':'' , 'method':'POST', 'class': 'form-group'}) }}
+        <img class="mb-4 mx-auto d-block" src="{{asset('Resources/Pictures/A.png')}}" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal text-center">REGISTRO</h1>
+
     
-    <!-- ESTILOS DE LA PAGINA Y EL FORMULARIO -->
-    <link href="{{asset('vendor/bootstrap/css/RegistrationPage.min.css')}}" rel="stylesheet">
-    <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">  
-  </head>
-  
-  <body class="text-center">
-    <form class="form-group">
-      <img class="mb-4" src="{{asset('Recursos/Pictures/A.png')}}" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">REGISTRO</h1>
-      
-      <label for="Nombre" class="sr-only">Nombre</label>
-      <input type="text" id="Username" class="form-control" placeholder="Nombre" required="" autofocus="">
-      
-      <label for="Apellidos" class="sr-only">Apellido</label>
-      <input type="text" id="Userlastname" class="form-control" placeholder="Apellido" required="">
-      
-      <label for="Email" class="sr-only">Correo</label>
-      <input type="email" id="UserEmail" class="form-control" placeholder="Correo" required="">
-      
-      <label for="Contraseña" class="sr-only">Contraseña</label>
-      <input type="password" id="UserPassword" class="form-control" placeholder="Contraseña" required="">
-      
-      <label for="ConfirmaContraseña" class="sr-only">CContraseña</label>
-      <input type="password" id="ConfirmationPassword" class="form-control" placeholder="Confirmar Contraseña" required="">
-     
-      <div class="checkbox mb-3">   </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">UNIRSE</button>
-    </form>
-</body>
-</html>
+    {{ form_end(form) }}    
+
+{% endblock %}

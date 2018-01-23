@@ -12,6 +12,8 @@ AppBundle\Entity\User:
             
         password:
             - NotBlank: ~
+            
+
         
        
         

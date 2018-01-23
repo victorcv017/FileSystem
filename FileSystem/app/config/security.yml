@@ -30,7 +30,7 @@ security:
             form_login: 
                 login_path: /signIn
                 check_path: /check
-                default_target_path: /profile
+                default_target_path: /home
             logout:
                 path: /logout
                 target: /signIn

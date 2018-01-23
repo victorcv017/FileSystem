@@ -12,6 +12,9 @@ AppBundle\Entity\Files:
         name:
             type: string
             length: 255
+        file:
+            type: string
+            length: 255
         extension:
             type: string
             length: 255

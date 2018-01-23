@@ -5,6 +5,10 @@ signIn:
 profile:
     path: /profile
     defaults: { _controller: AppBundle:Default:profile }
+    
+home:
+    path: /home
+    defaults: { _controller: AppBundle:Default:home}
 
 signUp:
     path: /signUp

@@ -287,4 +287,33 @@ class Files
     {
         return $this->extension;
     }
+    /**
+     * @var string
+     */
+    private $file;
+
+
+    /**
+     * Set file
+     *
+     * @param string $file
+     *
+     * @return Files
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
 }

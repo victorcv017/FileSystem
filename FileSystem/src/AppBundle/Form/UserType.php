@@ -18,17 +18,53 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class)
-                ->add('surname', TextType::class)
-                ->add('email', EmailType::class)
+        $builder->add('name', TextType::class , array(
+                                                    'label'=>false,
+                                                    'attr'=>array(
+                                                                'class'=>'form-control',
+                                                                'placeholder'=>'Nombre'
+                                                        
+                                                            )
+                                                ))
+                ->add('surname', TextType::class, array(
+                                                    'label'=>false,
+                                                    'attr'=>array(
+                                                                'class'=>'form-control',
+                                                                'placeholder'=>'Apellido'
+                                                        
+                                                            )
+                                                ))
+                ->add('email', EmailType::class, array(
+                                                    'label'=>false,
+                                                    'attr'=>array(
+                                                                'class'=>'form-control',
+                                                                'placeholder'=>'Correo'
+                                                        
+                                                            )
+                                                ))
                 ->add('password', RepeatedType::class, array(
                     'type' => PasswordType::class,
                     'invalid_message' => 'Las contraseñas deben coincidir.',
-                    'options' => array('attr' => array('class' => 'password-field')),
+                   
                     'required' => true,
-                    'first_options' => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Confirmar Password'),
-                ))->add('registrar', SubmitType::class);
+                    'first_options' => array('label' => false, 'attr'=>array(
+                                                                'class'=>'form-control',
+                                                                'placeholder'=>'Contraseña'
+                                                        
+                                                            )),
+                    'second_options' => array('label' => false, 'attr'=>array(
+                                                                'class'=>'form-control',
+                                                                'placeholder'=>'Confirmar Contraseña'
+                                                        
+                                                            )),
+                ))->add('registrar', SubmitType::class,  array(
+                                                    'label'=>'Unirse',
+                                                    'attr'=>array(
+                                                                'class'=>'btn btn-lg btn-primary btn-block',
+                                                                
+                                                        
+                                                            )
+                                                ));
     }/**
      * {@inheritdoc}
      */
