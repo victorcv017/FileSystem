@@ -124,7 +124,7 @@ class User implements UserInterface
         return $this->getName();
     }
 
-    public function getUsername(): string {
+    public function getUsername() {
         return $this->getEmail();
     }
 
