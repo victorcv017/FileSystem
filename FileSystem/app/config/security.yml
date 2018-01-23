@@ -15,8 +15,7 @@ security:
             memory: ~
     access_control:
         # require ROLE_ADMIN for /admin*
-        - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/uploadFile, roles: ROLE_USER }
+       
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
