@@ -161,9 +161,9 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $folders = $em->getRepository('AppBundle:Folder')->findBy(array('userId' => $user->getId()));
         */
-        $
-        $url = $request->getUri();
-        var_dump(trim($url, '/'));
+        
+        //$url = $request->getUri();
+        //var_dump(trim($url, '/'));
         
 
         return $this->render('@App/home.html.twig', array(

@@ -1,44 +1,33 @@
-<!DOCTYPE html>
+{% extends "base.html.twig" %}
 
-<html lang="es">
-    <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">    
+{% block title %}Perfil{% endblock %}
 
-    <title>Perfil</title>
-    
-     <!-- ESTILOS DE LA PAGINA  -->
-     <link href="{{asset('vendor/bootstrap/css/RegistrationPage.min.css')}}" rel="stylesheet">
-     <link href="{{asset('vendor/bootstrap/css/perfil.css')}}" rel="stylesheet">
-  </head>
-
-  <body>
-
+{% block body %}
     <header>    
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="">MI PERFIL</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="">CREAR CARPETA <span class="sr-only">(current)</span></a>
-            </li> 
-            <li class="nav-item active">
-              <a class="nav-link" href="">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
-            </li> 
-          </ul>          
-        </div>
-      </nav>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="">MI PERFIL</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="">CREAR CARPETA <span class="sr-only">(current)</span></a>
+                    </li> 
+                    <li class="nav-item active">
+                        <a class="nav-link" href="">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
+                    </li> 
+                </ul>          
+            </div>
+        </nav>
     </header>
-      
+
     <main role="main" class="container">
-      <h1 class="mt-5">MIS ARCHIVOS</h1>
-      
+        <h1 class="mt-5">MIS ARCHIVOS</h1>
+
     </main> 
 
-</body>
-</html>
+    
+{% endblock %}
+
+

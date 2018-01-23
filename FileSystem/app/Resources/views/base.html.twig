@@ -2,13 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="{{asset('Resources/Icons/A.ico')}}">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}"/>
         <link href="{{asset('vendor/bootstrap/css/RegistrationPage.min.css')}}" rel="stylesheet">
         <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">  
         <script src="{{asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script> 
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
