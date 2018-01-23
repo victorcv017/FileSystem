@@ -1,18 +1,36 @@
-{% extends "base.html.twig" %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="{{asset('Recursos/Icons/A.ico')}}">
 
-{% block title %}Example{% endblock %}
+        <title>Iniciar Sesión</title>   
 
-{% block body %}
-<h1>PRUEBAAAA 2</h1>
+         <!-- ESTILOS DE LA PAGINA Y EL FORMULARIO -->
+        <link href="{{asset('vendor/bootstrap/css/RegistrationPage.min.css')}}" rel="stylesheet">
+        <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">  
+    </head>
 
-<form method="POST" action="{{path('check')}}">
-    <input type="email" placeholder="email" name="_username" value="{{last_username}}">
-    <br>
-    <input type="password" placeholder="password" name="_password">
-    <br>
-    <label><a href="{{path('signUp')}}">No estas registrado. Registrate</a>
-    <br>
-    <input type="submit" value="Iniciar Sesion">
-   
-</form>
-{% endblock %}
+  <body class="text-center">
+    <form class="form-signin">
+      <img class="mb-4" src="{{asset('Recursos/Pictures/A.png')}}" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal"> </h1>
+     
+      <label for="Email" class="sr-only">Correo</label>
+      <input type="email" id="UserEmail" class="form-control" placeholder="Correo" required="" autofocus="">
+         
+      <label for="Contraseña" class="sr-only">Contraseña</label>
+      <input type="password" id="UserPassword" class="form-control" placeholder="Contraseña" required="">
+            
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Recuerdame
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">ENTRAR</button>
+    </form>
+</body>
+</html>
