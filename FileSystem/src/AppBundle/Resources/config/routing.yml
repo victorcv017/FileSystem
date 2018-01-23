@@ -9,6 +9,12 @@ profile:
 home:
     path: /home
     defaults: { _controller: AppBundle:Default:home}
+    
+urlhome:
+    path: /home/{url}
+    defaults: { _controller: AppBundle:Default:home , url: ''}
+    requirements:
+        url: .+
 
 signUp:
     path: /signUp

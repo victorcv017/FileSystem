@@ -154,21 +154,41 @@ class DefaultController extends Controller
     public function homeAction(Request $request){
         //var_dump($request->get('email'));
         $user = $this->getUser();
-        /*
-        if(!($request->get('email') == $user->getEmail())){
-            return $this->redirectToRoute('signUp');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $folders = $em->getRepository('AppBundle:Folder')->findBy(array('userId' => $user->getId()));
-        */
+        $url = $request->getUri();
+        $url = parse_url($url, PHP_URL_PATH);
+        $pos = strrpos($url, 'home');
+        $url = substr($url, $pos , strlen($url));
+        $path = explode("/",$url);
+        //var_dump($path);
+        $current_folder = $path[sizeof($path)-1];
         
-        //$url = $request->getUri();
-        //var_dump(trim($url, '/'));
+        
+        
+        $em = $this->getDoctrine()->getManager();
+        $current_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('name' => $current_folder, 'userId' => $user->getId()));
+        //var_dump($current_folder->getName());
+        //var_dump($current_folder);
+        $folders_obj = $current_folder->getChilds();
+        $files_obj = $current_folder->getFiles();
+        $files = array();
+        foreach ($files_obj as $file){
+            $files[$file->getFile()] = array('name' => $file->getName().".".$file->getExtension(), 
+                                            'created' => $file->getCreatedAt(), 
+                                            'updated' => $file->getUpdatedAt());
+        }
+        $folders = array();
+        foreach ($folders_obj as $folder) {
+            $folders[$folder->getId()] = array('name' => $folder->getName(), 
+                                        'created' => $folder->getCreatedAt());
+        }
+        var_dump($files);
+        //var_dump($folders);
         
 
         return $this->render('@App/home.html.twig', array(
-                    //'folders'=>$folders
-                        // ...
+                    'folders'=>$folders,
+                     'files' =>$files
+                
         ));
     }
     

@@ -267,7 +267,7 @@ class Folder
      *
      * @return Folder
      */
-    public function addFile(\AppBundle\Entity\File $file)
+    public function addFile(\AppBundle\Entity\Files $file)
     {
         $this->files[] = $file;
 
@@ -279,7 +279,7 @@ class Folder
      *
      * @param \AppBundle\Entity\File $file
      */
-    public function removeFile(\AppBundle\Entity\File $file)
+    public function removeFile(\AppBundle\Entity\Files $file)
     {
         $this->files->removeElement($file);
     }
