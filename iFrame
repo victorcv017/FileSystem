@@ -1,0 +1,23 @@
+<header>    
+        
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+           
+            <div class="dropdown">
+            
+                <a class="navbar-brand" href="{{path('home')}}">MI PERFIL</a>
+            
+                <div class="dropdown-content">     
+                    <br>   <a  class="nav-link" href="{{path('uploadFile',{'folder':folder})}}" target="iframe_a">CREAR CARPETA <span class="sr-only">(current)</span></a> </br>
+                 <a class="nav-link" href="{{path('uploadFile')}}" target="iframe_a">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
+                </div>
+            </div>
+        </nav>
+      
+    </header>
+
+<main role="main" class="container">
+        <h1 class="mt-5">MIS ARCHIVOS</h1>
+        <iframe height="300px" width="100%" src="demo_iframe.htm" name="iframe_a"></iframe>     
+        
+        
+    </main> 
