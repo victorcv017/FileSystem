@@ -2,24 +2,55 @@
 
 {% block title %}Perfil{% endblock %}
 
+{% block stylesheets %}
+   
+    <style>
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1; 
+}
+
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+</style>
+        
+{% endblock %}
+
 {% block body %}
+    
+    {{folder}}
+    
     <header>    
+             
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+           
+            <div class="dropdown">
+            
             <a class="navbar-brand" href="{{path('home')}}">MI PERFIL</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{path('uploadFile')}}">CREAR CARPETA <span class="sr-only">(current)</span></a>
-                    </li> 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{path('uploadFile')}}">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
-                    </li> 
-                </ul>          
+            
+            <div class="dropdown-content">     
+                 <br>   <a  class="nav-link" href="{{path('uploadFile',{'folder':folder})}}">CREAR CARPETA <span class="sr-only">(current)</span></a> </br>
+                 <a class="nav-link" href="{{path('uploadFile')}}">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
             </div>
-        </nav>
+        </div>
+                         </nav>
+      
     </header>
     
     <main role="main" class="container">
@@ -28,15 +59,15 @@
     </main> 
 
     {% if folders is not empty %}
-        {% for folder in folders%}
-            {{folder.name}}
+        {% for folder in folders%}            
+            <a href="{{path('urlhome',{'url':folder.name})}} " >  {{folder.name}}  </a>
             {{folder.created.date}}
         {% endfor %}
         
     {% endif %}                
     {% if files is not empty %}
         {% for file in files%}
-            {{file.name}}
+            <a href="" > {{file.name}}   </a>
             {{file.created.date}}
             {{file.updated}}
         {% endfor %}

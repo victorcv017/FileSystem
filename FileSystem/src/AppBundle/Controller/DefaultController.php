@@ -146,6 +146,15 @@ class DefaultController extends Controller
                     $folder->setParentFolder($parent_folder);
                     $em->persist($folder);
                     $em->flush();
+                }else{
+                    $parent_folder = $request->getFolder();
+                     $em = $this->getDoctrine()->getManager();
+                    $parent_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('userId'=>$user->getId()));
+                    
+                    $folder->setPath($parent_folder->getPath().$folder->getName());
+                    $folder->setParentFolder($parent_folder);
+                    $em->persist($folder);
+                    $em->flush();
                 }
             }
         }
@@ -179,7 +188,7 @@ class DefaultController extends Controller
         $files_obj = $current_folder->getFiles();
         $files = array();
         foreach ($files_obj as $file){
-            $files[$file->getFile()] = array('name' => $file->getName().".".$file->getExtension(), 
+            $files[$file->getFile()] = array('name' => $file->getName(), 
                                             'created' => $file->getCreatedAt(), 
                                             'updated' => $file->getUpdatedAt());
         }
@@ -188,13 +197,23 @@ class DefaultController extends Controller
             $folders[$folder->getId()] = array('name' => $folder->getName(), 
                                         'created' => $folder->getCreatedAt());
         }
-        //var_dump($files);
-        //var_dump($folders);
+
+        $user = $this->getUser();
+        $url = $request->getUri();
+        $url = parse_url($url, PHP_URL_PATH);
+        $pos = strrpos($url, 'home');
+        $url = substr($url, $pos , strlen($url));
+        $path = explode("/",$url);
+        //var_dump($path);
+        $current_folder = $path[sizeof($path)-1];
+        
+        if($current_folder == 'home') $current_folder = $user->getEmail();
         
 
         return $this->render('@App/home.html.twig', array(
                     'folders'=>$folders,
-                     'files' =>$files
+                     'files' =>$files,
+                     'folder' =>$current_folder
                 
         ));
     }
