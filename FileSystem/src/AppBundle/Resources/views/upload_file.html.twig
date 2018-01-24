@@ -1,20 +1,24 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Upload{% endblock %}
+{% block title %}Subir archivo{% endblock %}
+
+ {% block LogSign %}   
+ <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">    
+ {% endblock %}
 
 
-{% block body %}
-<h1>Welcome</h1>
-{{ form_start(form, {'action':'' , 'method':'POST' , 'enctype' : 'multipart/form-data'}) }}
+{% block body %}   
 
-{{ form_end(form) }}
-
-<h1>Folder</h1>
-<form method="POST" >
-    <input type="text" placeholder="Nombre" name="name">
-    <br>
-    <input type="submit" value="Crear" name="crear">
-   
-</form>
-
+        <form class="form-group" method="POST" action="{{path('check')}}">
+        <img  type="text" class="mb-4 mx-auto d-block" src="{{asset('Resources/Pictures/U.png')}}" alt="" width="250" height="175" name="">
+        <h1 class="h3 mb-3 font-weight-normal"> </h1>       
+        
+        <input type="file" id="ArchivoSeleccionado"  required  name="">
+        
+        <label for="FileName" class="sr-only">Nombre del archivo</label>
+        <input type="text" id="FileName" class="form-control" placeholder="Nombre del archivo" required autofocus="" name="">
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">SUBIR</button>
+    </form>
+    
 {% endblock %}

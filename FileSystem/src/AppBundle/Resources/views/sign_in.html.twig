@@ -1,6 +1,14 @@
 {% extends "base.html.twig" %}
 
+
+
+
 {% block title %}Iniciar Sesión{% endblock %}
+
+{% block LogSign %}      
+        <link href="{{asset('vendor/bootstrap/css/RegistrationPage.min.css')}}" rel="stylesheet">
+        <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">  
+{% endblock %}
 
 {% block body %}
     <form class="form-signin" method="POST" action="{{path('check')}}">

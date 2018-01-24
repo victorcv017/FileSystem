@@ -1,33 +1,20 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Perfil{% endblock %}
+{% block title %}Upload{% endblock %}
+
 
 {% block body %}
-    <header>    
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="">MI PERFIL</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="">CREAR CARPETA <span class="sr-only">(current)</span></a>
-                    </li> 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
-                    </li> 
-                </ul>          
-            </div>
-        </nav>
-    </header>
+<h1>Welcome</h1>
+{{ form_start(form, {'action':'' , 'method':'POST' , 'enctype' : 'multipart/form-data'}) }}
 
-    <main role="main" class="container">
-        <h1 class="mt-5">MIS ARCHIVOS</h1>
+{{ form_end(form) }}
 
-    </main> 
+<h1>Folder</h1>
+<form method="POST" >
+    <input type="text" placeholder="Nombre" name="name">
+    <br>
+    <input type="submit" value="Crear" name="crear">
+   
+</form>
 
-    
 {% endblock %}
-
-
