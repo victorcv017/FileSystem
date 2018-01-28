@@ -59,61 +59,21 @@
         <iframe height="300px" width="100%" src="" name="iframe_a"></iframe>    
            
     </main> 
-            <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Fecha de Creacion</th>
-            <th>Fecha de Modificación</th>
-   
-        </tr>
             
-            {% if folders is not empty %}
-     
-            {% for folder in folders%}
-            
-            <tr>
-                <td> 
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Simpleicons_Interface_folder-open-shape.svg/1000px-Simpleicons_Interface_folder-open-shape.svg.png" alt="Archivo" width="20" height="20">    
-                <a href="{{path('urlhome',{'url':folder.name})}} ">  {{folder.name}}  </a>
-                </td> 
-                <td> 
-                {{folder.created.date}}
-                </td> 
-            </tr>
-            
-            {% endfor %}
-            {% else %}
-            <tr>
-                <td>
-                    <td colspan="3" style="text-align:center;"> <h3>No se encontraron carpetas</h3></td>
-                </td>
-            </tr>
-      
-    {% endif %}     
-    
-    {% if files is not empty %}
-        {% for file in files%}
-        <tr>
-            <td>
-            <img src="https://icon-icons.com/icons2/1223/PNG/512/1492617351-6-forms-google-data-document-file_83439.png" alt="Archivo" width="20" height="20">
-            <a href="" > {{file.name}}   </a>
-            </td>
-            <td>
-            {{file.created.date}}
-            </td>
-            <td>
-            {{file.updated}}
-            </td>
-         </tr>
+             {% if folders is not empty %}
+        {% for folder in folders%}            
+            <a href="{{path('urlhome',{'url':folder.name})}} " >  {{folder.name}}  </a>
+            {{folder.created.date}}
         {% endfor %}
         
-        {% else %}
-            <tr>
-                <td>
-                    <td colspan="3" style="text-align:center;"> <h3>No se encontraron Archivos</h3></td>
-                </td>
-            </tr>
+    {% endif %}                
+    {% if files is not empty %}
+        {% for file in files%}
+            <a href="" > {{file.name}}   </a>
+            {{file.created.date}}
+            {{file.updated}}
+        {% endfor %}
         
     {% endif %}
-      </table>
+
 {% endblock %}
