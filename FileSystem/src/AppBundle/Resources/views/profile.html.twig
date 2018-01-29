@@ -1,23 +1,20 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Crear carpeta{% endblock %}
+{% block title %}Upload{% endblock %}
 
-{% block LogSign %}   
- <link href="{{asset('vendor/bootstrap/css/RegistrationForm.css')}}" rel="stylesheet">    
- {% endblock %}
- 
-{% block body %}   
 
-        <form class="form-group" method="POST" action="{{path('check')}}">
-        <img  type="text" class="mb-4 mx-auto d-block" src="{{asset('Resources/Pictures/F.png')}}" alt="" width="250" height="175" name="">
-        <h1 class="h3 mb-3 font-weight-normal"> </h1>       
-        
-       
-        
-        <label for="FolderName" class="sr-only" name="">Nombre de la carpeta</label>
-        <input type="text" id="FileName" class="form-control" placeholder="Nombre de la carpeta" required autofocus="" name="">
-        
-        <button class="btn btn-lg btn-primary btn-block" type="submit">CREAR</button>
-    </form>
-    
+{% block body %}
+<h1>Welcome</h1>
+{{ form_start(form, {'action':'' , 'method':'POST' , 'enctype' : 'multipart/form-data'}) }}
+
+{{ form_end(form) }}
+
+<h1>Folder</h1>
+<form method="POST" >
+    <input type="text" placeholder="Nombre" name="name">
+    <br>
+    <input type="submit" value="Crear" name="crear">
+   
+</form>
+
 {% endblock %}
