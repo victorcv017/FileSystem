@@ -45,7 +45,11 @@ AppBundle\Entity\Folder:
         childs:
             targetEntity: Folder
             mappedBy: parentFolder
+            orderBy:
+                createdAt: ASC
         files:
             targetEntity: Files
             mappedBy: folder
+            orderBy:
+                createdAt: ASC
     lifecycleCallbacks: {  }

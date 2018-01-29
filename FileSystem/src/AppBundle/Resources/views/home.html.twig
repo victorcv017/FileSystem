@@ -46,7 +46,7 @@
         
          <input for="" type="" id="Descripcion" class="form-control" placeholder="Descripcion"  name="desc" >
          <br></br>
-        <button class="btn btn-lg btn-primary btn-block" name="crear" type="submit" >CREAR</button>
+        <button class="btn btn-lg btn-primary btn-block" name="crear" value="crear" type="submit" >CREAR</button>
          </form>
         </div>
 
@@ -80,11 +80,10 @@
      
          <br class="mt-5"></br>
       {% if error is not empty %}
-          <h4>error</h4>
-      {% endif%}
-      {% if folders is empty and files is empty %}
-          <h4>No se encontraron archivos o carpetas</h4>
-      {% else %}
+          <div class="alert alert-danger" role="alert">
+              <strong>{{error}}</strong>
+          </div>
+      {% endif %}
         <table class="table table-hover table-striped">
             <thead>
                 <tr>
@@ -94,12 +93,21 @@
                 </tr>
             </thead>
             <tbody>
-          {% if folders is not empty %}
+                <tr>
+                    <td> 
+                        <a href="{{path('urlhome',{'url':parent_folder})}}">...<a/> 
+                    </td>
+                    <td/>
+                    <td/>
+                   
+                    
+                </tr>
+            {% if folders is not empty %}
               {% for folder in folders%}
               <tr>
                   <td>
                       <i class="fa fa-folder" aria-hidden="true"></i>
-                      <a  href="{{path('urlhome',{'url':folder.name})}}">{{folder.name}} </a>
+                      <a  href="{{path('urlhome',{'url':folder.path})}}">{{folder.name}} </a>
                   </td>
                   <td>
                      {{folder.description}}
@@ -109,9 +117,9 @@
                   </td>
               </tr>
               {% endfor %}
-          {% endif %}
-        {% if files is not empty %}
-            {% for file in files%}
+            {% endif %}
+            {% if files is not empty %}
+                {% for file in files%}
                 <tr>
                     <td>
                         <i class="fa fa-file" aria-hidden="true"></i>
@@ -124,10 +132,11 @@
                         {{file.created.date|date("m/d/Y") }}
                     </td>
                 </tr>
-            {% endfor %}
-        {% endif %}
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>  
-     {% endif %} 
+   
     </main> 
+  
 {% endblock %}

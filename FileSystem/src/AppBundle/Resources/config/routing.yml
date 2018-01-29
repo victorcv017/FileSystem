@@ -7,7 +7,7 @@ home:
     defaults: { _controller: AppBundle:Default:home}
     
 urlhome:
-    path: /home/{url}
+    path: /home{url}
     defaults: { _controller: AppBundle:Default:home , url: ''}
     requirements:
         url: .+

@@ -4,14 +4,24 @@ AppBundle\Entity\User:
             - NotBlank: ~
             - Regex: 
                 pattern: '/^[[:alpha:]]+$/u'
-                message: Your name is not valid
+                message: El nombre no es válido.
         email:
             - Email:
-                message: The email "{{ value }}" is not a valid email.
+                message: El correo "{{ value }}" no es válido.
                 checkMX: true
             
         password:
             - NotBlank: ~
+            
+AppBundle\Entity\Folder:
+    properties:
+        name:
+            - NotBlank: ~
+            - Regex: 
+                pattern: '/\s/'
+                match:   false
+                message: El nombre de la carpeta no puede contener espacios.
+
             
 
         

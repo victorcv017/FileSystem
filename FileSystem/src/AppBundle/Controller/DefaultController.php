@@ -9,8 +9,8 @@ use AppBundle\Form\FilesType;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {   
@@ -83,8 +83,9 @@ class DefaultController extends Controller
         ));
     }
     
-    public function homeAction(Request $request){
+    public function homeAction(Request $request, ValidatorInterface $validator){
         $error = "";
+        $success = false;
         // checar el folder acctual
         $user = $this->getUser();
         $url = $request->getUri();
@@ -93,14 +94,22 @@ class DefaultController extends Controller
         $url = substr($url, $pos , strlen($url));
         $path = explode("/",$url);
         $current_folder = $path[sizeof($path)-1];
+        $parent_folder = "";
         // si esta en el folder root
-        if($current_folder == 'home') $current_folder = $user->getEmail();
+        if($current_folder == 'home') {
+            $current_folder = $user->getEmail();
+           
+        }else{
+            // checar quien es el padre,  si es home que mande a /
+            $parent_folder = "/".$path[sizeof($path)-2];
+            if($parent_folder == '/home'){
+                $parent_folder = '';
+            }
+        }
         
         //entidad del folder actual
         $em = $this->getDoctrine()->getManager();
         $current_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('name' => $current_folder, 'userId' => $user->getId()));
-        //var_dump($current_folder);
-
        
         // obtener todos los archivos y todos las carpetas
         $folders_obj = $current_folder->getChilds();
@@ -112,10 +121,15 @@ class DefaultController extends Controller
                                             'file' => $file->getFile(),
                                             'updated' => $file->getUpdatedAt());
         }
+        
         $folders = array();
         foreach ($folders_obj as $folder) {
+            $path_folder = $folder->getPath();
+            $path_folder = strstr($path_folder, '/');
+            $path = substr($path_folder , 0 , strlen($path_folder)-1);
             $folders[$folder->getId()] = array('name' => $folder->getName(),
                                         'description' => $folder->getDescription(),
+                                        'path' => $path,
                                         'created' => $folder->getCreatedAt());
         }
           
@@ -142,42 +156,58 @@ class DefaultController extends Controller
                 $file->move(
                         "Resources/Files", $file_name
                 );
-                 header( "refresh:0" );
+                header( "refresh:0" );
+                $success = true;
                 //return $this->redirectToRoute($request->get('_route'));
             }
         }
         
         //formulario para subir carpeta
         if ($request->getMethod() == 'POST') {
-            
-            if ($request->request->get('crear')!=null) {
-                //folders unicos por usuario
-                $em = $this->getDoctrine()->getManager();
-                $new_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('name' => $request->request->get('name'), 'userId' => $user->getId()));
-                if($new_folder == null){
+            if ($request->request->get('crear') == 'crear') {
+                //folders unicos por carpeta
+                $childs = $current_folder->getChilds();
+                $create = true;
+                foreach ($childs as $child){
+                    if($child->getName()== $request->request->get('name')) {
+                        $create = false;
+                        break;
+                    }
+                           
+                }
+                if($create){
                     $folder = new Folder();
                     $folder->setName($request->request->get('name'));
                     $folder->setDescription($request->request->get('desc'));
                     $folder->setUser($user);
                     $folder->setParentFolder($current_folder);
                     $folder->setPath($current_folder->getPath() . $folder->getName() . "/");
-                    $em->persist($folder);
-                    $em->flush();
+                    $errors = $validator->validate($folder);
+                    if(count($errors)>0){
+                        $error = "El nombre de la carpeta no puede contener espacios.";
+                        
+                    }else{
+                        $em->persist($folder);
+                        $em->flush();
+                        header( "refresh:0" );
+                        $success = true;
+                    }
+                    
+                    
                 }else{
                     $error = $error."La carpeta ya existe";
                 }
-               
-               
             }
         }
         
         return $this->render('@App/home.html.twig', array(
                     'folders'=>$folders,
-                     'files' =>$files,
+                    'files' =>$files,
                      'folder' =>$current_folder,
                      'form'=> $form->createView(),
-                     'error'=> $error
-                
+                     'error'=> $error,
+                     'parent_folder' => $parent_folder,
+                     'success' => $success
         ));
     }
     

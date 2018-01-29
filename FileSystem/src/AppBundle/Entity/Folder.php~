@@ -132,7 +132,7 @@ class Folder
      *
      * @return Folder
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
@@ -221,6 +221,7 @@ class Folder
      */
     public function __construct()
     {
+        $this->setCreatedAt(new \DateTime());
         $this->childs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->files = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -266,7 +267,7 @@ class Folder
      *
      * @return Folder
      */
-    public function addFile(\AppBundle\Entity\File $file)
+    public function addFile(\AppBundle\Entity\Files $file)
     {
         $this->files[] = $file;
 
@@ -278,7 +279,7 @@ class Folder
      *
      * @param \AppBundle\Entity\File $file
      */
-    public function removeFile(\AppBundle\Entity\File $file)
+    public function removeFile(\AppBundle\Entity\Files $file)
     {
         $this->files->removeElement($file);
     }

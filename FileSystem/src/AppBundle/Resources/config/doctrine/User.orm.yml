@@ -29,7 +29,11 @@ AppBundle\Entity\User:
         folders:
             targetEntity: Folder
             mappedBy: user
+            orderBy:
+                createdAt: ASC
         files:
             targetEntity: Files
-            mappedBy: user   
+            mappedBy: user
+            orderBy:
+                createdAt: ASC
     lifecycleCallbacks: {  }
