@@ -1,77 +1,154 @@
 {% extends "base.html.twig" %}
-
-
 {% block title %}Perfil{% endblock %}
 
-{% block stylesheets %}
-   
-    <style>
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: black;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    z-index: 1; 
-}
-
-
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-</style>
-     
-
-{% endblock %}
 
 {% block body %}
 
     <header>    
              
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-           
-            <div class="dropdown">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">           
+            <div class="dropdown">            
+            <a class="navbar-brand" href="{{path('home')}}">MI PERFIL</a>          
+        </nav>   
+        
+    </header>
+        <br class="mt-5"></br>
+    
+    <main role="main" class="container">        
+        
+    <br class="mt-5"></br>
+        
+    <div class="trans text-center"> 
+        <a type="" class="btn btn-danger" data-toggle="modal" data-target="#NewFolder" >
+        Crear Carpeta
+        </a>
+    
+    <a type="" class="btn btn-danger" data-toggle="modal" data-target="#NewFile">
+       Subir Archivo
+    </a>
+        </div>
+  
+        <div class="modal fade" id="NewFolder" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content">
             
-            <a class="navbar-brand" href="{{path('home')}}">MI PERFIL</a>
-            
-            <div class="dropdown-content">     
-                 <br>   <a  class="nav-link" href="{{path('uploadFile',{'folder':folder})}}">CREAR CARPETA <span class="sr-only">(current)</span></a> </br>
-                 <a class="nav-link" href="{{path('uploadFile')}}">SUBIR ARCHIVO<span class="sr-only">(current)</span></a>
+        <div class="modal-header">
+             <h5 class="modal-title" id="modalLabelSmall">Nueva Carpeta</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>           
+        </div>
+
+        <div class="modal-body">
+        <form  method="POST" action=" ">
+            <img  type="text" class="mb-4 mx-auto d-block" src="{{asset('Resources/Pictures/F.png')}}" alt="" width="250" height="175" name="">
+        <input for="" type="" id="FolderName" class="form-control" placeholder="Nombre" required autofocus="" name="" padding-bottom=2>
+        
+         <input for="" type="" id="Descripcion" class="form-control" placeholder="Descripcion"  name="" >
+         <br></br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">CREAR</button>
+         </form>
+        </div>
+
+        </div>
+        </div>
+        </div>
+    
+    
+
+    <div class="modal fade" id="NewFile" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabelLarge">Nuevo Archivo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>           
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-group" method="POST" action="{{path('check')}}">
+        <img  type="text" class="mb-4 mx-auto d-block" src="{{asset('Resources/Pictures/U.png')}}" alt="" width="250" height="175" name="">
+        <h1 class="h3 mb-3 font-weight-normal"> </h1>       
+        
+        <input type="file" id="ArchivoSeleccionado"  required  name="">
+        
+        <label for="FileName" class="sr-only">Nombre del archivo</label>
+        <input type="text" id="FileName" class="form-control" placeholder="Nombre del archivo" required autofocus="" name="">
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">SUBIR</button>
+    </form>
+                </div>
+
             </div>
         </div>
-                         </nav>
-      
-    </header>
-    
-    <main role="main" class="container">
-        <h1 class="mt-5">MIS ARCHIVOS</h1>
+    </div>
+     
+         <br class="mt-5"></br>
+         
+      <table>
+<tr>
+<th>Nombre</th>
+<th>Fecha de Creacion</th>
+<th>Fecha de Modificación</th>
+</tr>
+{% if folders is not empty %}
+{% for folder in folders%}
+<tr>
+<td>
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Simpleicons_I
+nterface_folder-open-shape.svg/1000px-Simpleicons_Interface_folder-openshape.svg.png"
+alt="Archivo" width="20" height="20">
+<a href="{{path('urlhome',{'url':folder.name})}} ">
+{{folder.name}} </a>
+</td>
+<td>
+{{folder.created.date}}
+</td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+<td>
+<td colspan="3" style="text-align:center;"> <h3>No se
+encontraron carpetas</h3></td>
+</td>
+</tr>
+{% endif %}
+{% if files is not empty %}
+{% for file in files%}
+<tr>
+<td>
+<img src="https://icon-icons.com/icons2/1223/PNG/512/1492617351-
+6-forms-google-data-document-file_83439.png" alt="Archivo" width="20"
+height="20">
+<a href="" > {{file.name}} </a>
+</td>
+<td>
+{{file.created.date}}
+</td>
+<td>
+{{file.updated}}
+</td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+<td>
+<td colspan="3" style="text-align:center;"> <h3>No se
+encontraron Archivos</h3></td>
+</td>
+</tr>
+{% endif %}
+</table>  
+         
+        
        
     </main> 
 
-    {% if folders is not empty %}
-        {% for folder in folders%}            
-            <a href="{{path('urlhome',{'url':folder.name})}} " >  {{folder.name}}  </a>
-            {{folder.created.date}}
-        {% endfor %}
-        
-    {% endif %}                
-    {% if files is not empty %}
-        {% for file in files%}
-            <a href="" > {{file.name}}   </a>
-            {{file.created.date}}
-            {{file.updated}}
-        {% endfor %}
-        
-    {% endif %}
-     
-{% endblock %}
+
+   
+    
+    {% endblock %}

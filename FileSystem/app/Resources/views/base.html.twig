@@ -10,6 +10,9 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}"/>
        
+        
+        
+        
         {% block LogSign %}        
         {% endblock %}
         
@@ -20,6 +23,10 @@
         
         {% endblock %}
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %} 
+        {% block javascripts %}
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        
+        {% endblock %} 
     </body>
 </html>
