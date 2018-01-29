@@ -1,0 +1,9 @@
+Anáhuac Parking y Lector de Barras
+Se seguirá el mismo plan que el anterior , solo que aquí se informará además de que el alumno tiene que escanear su credencial o su código QR en una de las terminales de lector de barras que estarán en la caseta de vigilancia.
+
+Anáhuac Parking y Lector de Huella
+Mismo plan, a diferencia de que ahora se tendrá un stand en la parte del pasillo de ingeniería o en la lona naranja frente a cafetería para que el alumno registre su huella .
+
+Anáhuac Parking y Lector de RFID
+El plan de implementación cambiaría un poco , se tendría que hacer también la campaña de información acerca del registro de entrada , pero por parte del alumno solo quedaría informarle que tendrá que traer su credencial de la escuela y mostrarla directamente al lector, lo que resultaría más fácil para el usuario. 
+La implementación del lector se podría hacer en vacaciones donde el auge de la Universidad es bajo y no causaría molestias mayores al usuario, e incluso cuando este instalado podría comenzar a funcionar mientras la campaña esta en curso. Así mismo se dejaría una persona encargada en un lapso de 2 semanas para problemas que se pudieran presentar al principio.

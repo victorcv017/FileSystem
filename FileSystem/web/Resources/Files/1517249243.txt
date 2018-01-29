@@ -1,0 +1,17 @@
+modificar vista policia
+	
+	
+	vista ingreso externo
+		header más grander
+		tamaño del pop un en ancho más grande
+
+	
+	vista servicios 
+		cambiar el header igual y agregarle un icono a cada opcion
+		
+	
+	vista buscar interno
+		cambiar el id a color naranja 
+	
+	
+diagrama uml terminar y hacer los casos de uso

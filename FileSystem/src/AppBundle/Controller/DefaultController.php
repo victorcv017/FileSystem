@@ -9,6 +9,8 @@ use AppBundle\Form\FilesType;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
 {   
@@ -44,14 +46,6 @@ class DefaultController extends Controller
         ));
     }
     
-    //-----------------------------------------Controlador del Perfil
-    public function profileAction(Request $request){
-        $user = $this->getUser();
-        
-        return $this->render('@App/profile.html.twig', array(
-                    
-        ));
-    }
     
     //----------------------------------------Controlador del Registro
     public function signUpAction(Request $request) {
@@ -89,131 +83,100 @@ class DefaultController extends Controller
         ));
     }
     
-    //----------------------------------Upload Controller
-    public function uploadFileAction(Request $request){
-        $user = $this->getUser();
-        $upfile = new Files();
-        $form = $this->createForm(FilesType::class, $upfile);
-        $em = $this->getDoctrine()->getManager();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form["file"]->getData();
-            var_dump($data);
-            var_dump($upfile->getFile());
-            if(isset($this->mimeType[$upfile->getFile()->getmimeType()])){
-                echo "Archivo subido";
-                $file = $upfile->getFile();
-                $ext = $data->getClientOriginalExtension();
-                $file_name = time() . "." . $ext;
-                $upfile->setExtension($ext);
-                $upfile->setUser($user);
-                $upfile->setName($file_name);
-                
-               // $folder = 
-                
-                
-                
-                $em->persist($upfile);
-                $em->flush();
-                $file->move(
-                        "Resources/Files", $file_name
-                );
-                  
-                
-            }
-
-            
-        }
-        if($request->getMethod() == 'POST'){
-            if($request->get('crear')!=null){
-                $folder = new Folder();
-                $folder->setName($request->get('name'));
-                $folder->setUser($user);
-                $em->getRepository("AppBundle:Folder");
-                $query = $em->createQuery(
-                                'SELECT COUNT(f.id)
-                                FROM AppBundle:Folder f
-                                WHERE f.userId = :user_id'
-                        )->setParameter('user_id', $user->getId());
-                $count = $query->getResult();
-                $count = $count[0][1];
-                //var_dump($count);
-                if($count == 1){
-                    $em = $this->getDoctrine()->getManager();
-                    $parent_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('userId'=>$user->getId()));
-                    
-                    $folder->setPath($parent_folder->getPath().$folder->getName());
-                    $folder->setParentFolder($parent_folder);
-                    $em->persist($folder);
-                    $em->flush();
-                }else{
-                    $parent_folder = $request->getFolder();
-                     $em = $this->getDoctrine()->getManager();
-                    $parent_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('userId'=>$user->getId()));
-                    
-                    $folder->setPath($parent_folder->getPath().$folder->getName());
-                    $folder->setParentFolder($parent_folder);
-                    $em->persist($folder);
-                    $em->flush();
-                }
-            }
-        }
-
-        return $this->render('@App/upload_file.html.twig', array(
-                    'form' => $form->createView()
-                        // ...
-        ));
-    }
-    
     public function homeAction(Request $request){
-        //var_dump($request->get('email'));
+        $error = "";
+        // checar el folder acctual
         $user = $this->getUser();
         $url = $request->getUri();
         $url = parse_url($url, PHP_URL_PATH);
         $pos = strrpos($url, 'home');
         $url = substr($url, $pos , strlen($url));
         $path = explode("/",$url);
-        //var_dump($path);
         $current_folder = $path[sizeof($path)-1];
-        
+        // si esta en el folder root
         if($current_folder == 'home') $current_folder = $user->getEmail();
         
-        
+        //entidad del folder actual
         $em = $this->getDoctrine()->getManager();
         $current_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('name' => $current_folder, 'userId' => $user->getId()));
-        
-        if($current_folder == 'home') $current_folder = $user->getEmail();
-        
+        //var_dump($current_folder);
+
+       
+        // obtener todos los archivos y todos las carpetas
         $folders_obj = $current_folder->getChilds();
         $files_obj = $current_folder->getFiles();
         $files = array();
         foreach ($files_obj as $file){
             $files[$file->getFile()] = array('name' => $file->getName(), 
                                             'created' => $file->getCreatedAt(), 
+                                            'file' => $file->getFile(),
                                             'updated' => $file->getUpdatedAt());
         }
         $folders = array();
         foreach ($folders_obj as $folder) {
-            $folders[$folder->getId()] = array('name' => $folder->getName(), 
+            $folders[$folder->getId()] = array('name' => $folder->getName(),
+                                        'description' => $folder->getDescription(),
                                         'created' => $folder->getCreatedAt());
         }
-
-        $user = $this->getUser();
-        $url = $request->getUri();
-        $url = parse_url($url, PHP_URL_PATH);
-        $pos = strrpos($url, 'home');
-        $url = substr($url, $pos , strlen($url));
-        $path = explode("/",$url);
-        //var_dump($path);
-        $current_folder = $path[sizeof($path)-1];
+          
+       //formulario para el modal de subir archivo
+        $upfile = new Files();
+        $form = $this->createForm(FilesType::class, $upfile);
+        $em = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form["file"]->getData();
+            if (isset($this->mimeType[$upfile->getFile()->getmimeType()])) {
+                echo "Archivo subido";
+                $file = $upfile->getFile();
+                $ext = $data->getClientOriginalExtension();
+                $file_name = time() . "." . $ext;
+                $upfile->setExtension($ext);
+                $upfile->setUser($user);
+                $upfile->setName($data->getClientOriginalName());
+                $upfile->setFile($file_name);
+                $upfile->setFolder($current_folder);
+                $upfile->setPath($current_folder->getPath());
+                $em->persist($upfile);
+                $em->flush();
+                $file->move(
+                        "Resources/Files", $file_name
+                );
+                 header( "refresh:0" );
+                //return $this->redirectToRoute($request->get('_route'));
+            }
+        }
         
-        if($current_folder == 'home') $current_folder = $user->getEmail();
+        //formulario para subir carpeta
+        if ($request->getMethod() == 'POST') {
+            
+            if ($request->request->get('crear')!=null) {
+                //folders unicos por usuario
+                $em = $this->getDoctrine()->getManager();
+                $new_folder = $em->getRepository('AppBundle:Folder')->findOneBy(array('name' => $request->request->get('name'), 'userId' => $user->getId()));
+                if($new_folder == null){
+                    $folder = new Folder();
+                    $folder->setName($request->request->get('name'));
+                    $folder->setDescription($request->request->get('desc'));
+                    $folder->setUser($user);
+                    $folder->setParentFolder($current_folder);
+                    $folder->setPath($current_folder->getPath() . $folder->getName() . "/");
+                    $em->persist($folder);
+                    $em->flush();
+                }else{
+                    $error = $error."La carpeta ya existe";
+                }
+               
+               
+            }
+        }
         
-
         return $this->render('@App/home.html.twig', array(
                     'folders'=>$folders,
                      'files' =>$files,
-                     'folder' =>$current_folder
+                     'folder' =>$current_folder,
+                     'form'=> $form->createView(),
+                     'error'=> $error
                 
         ));
     }

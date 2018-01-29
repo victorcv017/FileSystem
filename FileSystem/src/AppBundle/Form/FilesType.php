@@ -16,9 +16,15 @@ class FilesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name' , TextType::class)
-                ->add('file', FileType::class )
-                ->add('submit', SubmitType::class);
+        $builder->add('file', FileType::class , array(
+                                                    'label' => false
+                                                ))
+                ->add('submit', SubmitType::class, array(
+                                                        'label'=>'SUBIR',
+                                                        'attr' => array(
+                                                                    'class' => 'btn btn-lg btn-primary btn-block'
+                                                                    )
+                                                ));
     }/**
      * {@inheritdoc}
      */
