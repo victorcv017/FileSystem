@@ -34,7 +34,7 @@ class DefaultController extends Controller
     public function signInAction(){
         //comprueba si hay una sesión de usuario iniciada
         if ($this->getUser() instanceof User) {
-            return $this->redirectToRoute('home', array('email'=>$this->getUser()->getEmail()));
+            return $this->redirectToRoute('home');
         }
         
         //recordar el último usuario ingresado, que no lo vuelva a escribir
@@ -49,6 +49,9 @@ class DefaultController extends Controller
     
     //----------------------------------------Controlador del Registro
     public function signUpAction(Request $request) {
+        if ($this->getUser() instanceof User) {
+            return $this->redirectToRoute('home');
+        }
         //instancia de la Entidad User y su formulario
         $user = new User();
         $form = $this->createForm(UserType::class, $user);

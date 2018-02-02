@@ -11,7 +11,9 @@
 
     {{ form_start(form, {'action':'' , 'method':'POST', 'class': 'form-group'}) }}
         <img class="mb-4 mx-auto d-block" src="{{asset('Resources/Pictures/A.png')}}" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal text-center">REGISTRO</h1>   
+        <h1 class="h3 mb-3 font-weight-normal text-center">REGISTRO</h1> 
+        <a href="{{path('signIn')}}"  >¿Ya tienes cuenta? Inicia sesión<a/> 
+        
     {{ form_end(form) }}    
 
 {% endblock %}
